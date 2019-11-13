@@ -1,4 +1,4 @@
-from app import db, ma
+from resources.models import db, ma
 from flask import Flask
 from marshmallow import Schema, fields, pre_load, validate
 from flask_sqlalchemy import SQLAlchemy
