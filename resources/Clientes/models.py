@@ -1,5 +1,5 @@
 from resources.models import db, ma
-from marshmallow import Schema, fields
+from marshmallow import fields
 from sqlalchemy.dialects.mysql import TINYINT
 import uuid
 
