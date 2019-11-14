@@ -24,7 +24,7 @@ class Cliente(db.Model):
 
 
 class ClienteSchema(ma.Schema):
-    id = fields.Integer()
+    id = fields.String()
     name = fields.String(required=True)
     email = fields.String(required=True)
     profile_picture = fields.String(required=True)
