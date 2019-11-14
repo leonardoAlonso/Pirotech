@@ -1,7 +1,5 @@
 from resources.models import db, ma
-from flask import Flask
-from marshmallow import Schema, fields, pre_load, validate
-from flask_sqlalchemy import SQLAlchemy
+from marshmallow import Schema, fields
 from sqlalchemy.dialects.mysql import TINYINT
 import uuid
 

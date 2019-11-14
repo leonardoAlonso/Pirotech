@@ -5,7 +5,6 @@ from .models import Clientes, ClienteSchema
 
 clients_schema = ClienteSchema(many=True)
 client_schema = ClienteSchema()
-
 class ClienteView(Resource):
     def get(self):
         clients = Clientes.query.all()
