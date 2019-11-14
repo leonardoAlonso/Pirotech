@@ -2,7 +2,7 @@ from flask import Blueprint
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_restful import Api
-from resources.Clientes.views import Cliente
+from resources.Clientes.views import ClienteView
 
 db = SQLAlchemy()
 ma = Marshmallow()
@@ -11,4 +11,4 @@ api_bp = Blueprint('api', __name__)
 api = Api(api_bp)
     
 # Route
-api.add_resource(Cliente, '/cliente')
+api.add_resource(ClienteView, '/cliente')
