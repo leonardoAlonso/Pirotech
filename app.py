@@ -4,8 +4,6 @@ from flask_marshmallow import Marshmallow
 from flask_restful import Api
 from resources.Clientes.views import ClienteView
 
-db = SQLAlchemy()
-ma = Marshmallow()
 
 api_bp = Blueprint('api', __name__)
 api = Api(api_bp)

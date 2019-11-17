@@ -1,6 +1,7 @@
-from resources.models import db
+from resources.models import db, bc
 from flask_restful import Resource, reqparse
 from .models import Cliente, ClienteSchema
+
 
 clients_schema = ClienteSchema(many=True)
 client_schema = ClienteSchema()
@@ -30,6 +31,7 @@ class ClienteView(Resource):
         Add new client to database
         '''
         args = parcer.parse_args()
+        args['password'] = bc.generate_password_hash(args['password'])
         client = Cliente(**args)
         try:
             db.session.add(client)
