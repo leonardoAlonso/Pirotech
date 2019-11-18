@@ -1,4 +1,4 @@
-from resources.models import db, bc
+from api.models import db, bc
 from flask_restful import Resource, reqparse
 from .models import Cliente, ClienteSchema
 
@@ -15,7 +15,12 @@ parcer.add_argument("password", type=str, required=True,
                     help="password is a required parameter")
 
 
-class ClienteView(Resource):
+class ClientesView(Resource):
+    """ 
+        Clientes view
+        Create new client
+        Get a list of clients
+    """
     @classmethod
     def get(cls ):
         '''

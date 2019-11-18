@@ -1,10 +1,11 @@
-from resources.models import db, ma
+from api.models import db, ma
 from marshmallow import fields
 from sqlalchemy.dialects.mysql import TINYINT
 import uuid
 
 
 class Cliente(db.Model):
+    """ Table Clientes """
     __tablename__ = 'Clientes'
     id = db.Column(db.String(36), primary_key=True)
     name = db.Column(db.String(100), nullable=False)
@@ -24,6 +25,7 @@ class Cliente(db.Model):
 
 
 class ClienteSchema(ma.Schema):
+    """ Serializer from Clientes table """
     id = fields.String()
     name = fields.String(required=True)
     email = fields.String(required=True)
