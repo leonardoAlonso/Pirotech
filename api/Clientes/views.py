@@ -1,7 +1,7 @@
 from api.models import db, bc
 from flask_restful import Resource, reqparse
 from .models import Cliente, ClienteSchema
-
+from .controller import uniqueEmail, uniqueName
 
 clients_schema = ClienteSchema(many=True)
 client_schema = ClienteSchema()
@@ -36,12 +36,19 @@ class ClientesView(Resource):
         Add new client to database
         '''
         args = parcer.parse_args()
+        if len(args['password']) < 8:
+            return {'status': 'error', 'data': 'Password len error'}, 400
         args['password'] = bc.generate_password_hash(args['password'])
-        client = Cliente(**args)
-        try:
-            db.session.add(client)
-            db.session.commit()
-            result = client_schema.dump(client).data
-            return {'status':'success', 'data':result}, 201
-        except Exception as e:
-            return {'status':'error', 'data':str(e)}, 400
+        email = args['email']
+        name = args['name']
+        if uniqueEmail(args['email']) and uniqueName(args['name']):
+            client = Cliente(**args)
+            try:
+                db.session.add(client)
+                db.session.commit()
+                result = client_schema.dump(client).data
+                return {'status':'success', 'data':result}, 201
+            except Exception as e:
+                return {'status':'error', 'data':str(e)}, 400
+        else:
+            return {'status': 'error', 'data': 'Not unique'}, 400
