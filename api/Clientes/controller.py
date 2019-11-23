@@ -1,5 +1,4 @@
-from api.models import db
-from .models import Cliente, ClienteSchema
+from .models import Cliente
 
 def uniqueEmail(email):
     client = Cliente.query.filter_by(email=email).first()

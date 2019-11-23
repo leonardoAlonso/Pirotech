@@ -16,7 +16,7 @@ parcer.add_argument("password", type=str, required=True,
 
 
 class ClientesView(Resource):
-    """ 
+    """
         Clientes view
         Create new client
         Get a list of clients
@@ -39,8 +39,6 @@ class ClientesView(Resource):
         if len(args['password']) < 8:
             return {'status': 'error', 'data': 'Password len error'}, 400
         args['password'] = bc.generate_password_hash(args['password'])
-        email = args['email']
-        name = args['name']
         if uniqueEmail(args['email']) and uniqueName(args['name']):
             client = Cliente(**args)
             try:

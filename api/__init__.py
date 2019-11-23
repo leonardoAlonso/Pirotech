@@ -1,7 +1,5 @@
 from flask import Flask
 from flask import Blueprint
-from flask_sqlalchemy import SQLAlchemy
-from flask_marshmallow import Marshmallow
 from flask_restful import Api
 from api.models import db
 from api.Clientes.views import ClientesView

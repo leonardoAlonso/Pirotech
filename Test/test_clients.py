@@ -9,10 +9,9 @@ base_url = "/api/v1/clientes"
 
 
 class ClientsTest(unittest.TestCase):
-    """ 
-        Test cases from Clients View 
     """
-
+        Test cases from Clients View
+    """
     def setUp(self):
         self.app = create_app(TestingConfig)
         self.test_client = self.app.test_client()
