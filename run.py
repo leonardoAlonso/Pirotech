@@ -1,19 +1,5 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from app import db
-
-def create_app(config_filename):
-    app = Flask(__name__)
-    app.config.from_object(config_filename)
-    
-    from app import api_bp
-    app.register_blueprint(api_bp, url_prefix='/api/v1')
-
-    db.init_app(app)
-
-    return app
-
-
+from api import create_app
+from api.config import DevelopmentConfig
 if __name__ == "__main__":
-    app = create_app("config")
+    app = create_app(DevelopmentConfig)
     app.run(debug=True)
