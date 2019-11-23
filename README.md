@@ -1,5 +1,7 @@
 # Pirotech
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c15fd8acb6344cccbdf9988a899ad086)](https://www.codacy.com/manual/leonardoalonsososa/Pirotech?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=leonardoAlonso/Pirotech&amp;utm_campaign=Badge_Grade)
+
 Api rest to sell fireworks in a mobile app
 
 ## Install 
