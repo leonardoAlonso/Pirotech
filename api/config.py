@@ -13,6 +13,7 @@ class ProductionConfig(Config):
 
 class DevelopmentConfig(Config):
     DEBUG = True
+    JWT_SECRET_KEY = 'secret'
 
 class TestingConfig(Config):
     TESTING = True

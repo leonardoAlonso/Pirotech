@@ -1,5 +1,6 @@
 from api.models import db, bc
 from flask_restful import Resource, reqparse
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from .models import Cliente, ClienteSchema
 from .controller import uniqueEmail, uniqueName
 
@@ -50,3 +51,19 @@ class ClientesView(Resource):
                 return {'status':'error', 'data':str(e)}, 400
         else:
             return {'status': 'error', 'data': 'Not unique'}, 400
+class ClienteView(Resource):
+    '''
+        Get, Update and Delete a client
+    '''
+    @classmethod
+    @jwt_required
+    def get(cls, client_id):
+        identity = get_jwt_identity()
+        if identity != client_id:
+            return {'status': 'error', 'data': 'Identity error'}, 400
+        client = Cliente.query.filter_by(id=identity).first()
+        if client:
+            result = client_schema.dump(client).data
+            return {'status': 'success', 'data':result}, 200
+        else:
+            return {'status':'error', 'data':'Client does not exist'}, 404
