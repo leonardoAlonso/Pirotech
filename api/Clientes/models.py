@@ -14,6 +14,7 @@ class Cliente(db.Model):
     is_facebook = db.Column(TINYINT(1), default=0)
     is_twitter = db.Column(TINYINT(1), default=0)
     is_google = db.Column(TINYINT(1), default=0)
+    is_active = db.Column(TINYINT(1), default=1 )
     profile_picture = db.Column(db.String(255), nullable=True)
     creation_date = db.Column(
         db.TIMESTAMP, server_default=db.func.current_timestamp(), nullable=False)
