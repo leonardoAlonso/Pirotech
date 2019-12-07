@@ -13,6 +13,8 @@ class ProductionConfig(Config):
 
 class DevelopmentConfig(Config):
     DEBUG = True
+    JWT_SECRET_KEY = '3ae03a298434a5a187b3d6a52360853b3c18b2cf4b3828f0'
+    ENV = 'development'
 
 class TestingConfig(Config):
     TESTING = True
