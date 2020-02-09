@@ -12,7 +12,7 @@ class Market(BaseModel, db.Model):
     longitude = db.Column(db.Numeric(), nullable=False)
     name = db.Column(db.String(75), nullable=False)
     seller = relationship('Seller', back_populates='market')
-
+    is_active = db.Column(TINYINT(1), default=1)
 
 
 class MarketSchema(ma.Schema):
