@@ -20,11 +20,11 @@ class ClientAuth(Resource):
             Login method
         '''
         args = parcer.parse_args()
-        client = autenticate(args['email'], args['password'])
-        if client:
+        user = autenticate(args['email'], args['password'])
+        if user.client:
             access_token = create_access_token(
-                identity=client.id, fresh=True, expires_delta=timedelta(hours=1))
-            refresh_token = create_refresh_token(client.id)
+                identity=user.client.id, fresh=True, expires_delta=timedelta(hours=1))
+            refresh_token = create_refresh_token(user.client.id)
 
             return {
                 'status': 'success',

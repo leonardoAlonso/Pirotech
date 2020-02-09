@@ -9,7 +9,7 @@ class Cliente(BaseModel, db.Model):
     """ Table Clientes """
     __tablename__ = 'clientes'
     user_id = db.Column(db.String(36), ForeignKey('users.id'))
-    user = relationship('User', uselist=False, back_populates='client')
+    user = relationship('User', back_populates='client')
     profile_picture = db.Column(db.String(255), nullable=True)
     is_facebook = db.Column(TINYINT(1), default=0)
     is_twitter = db.Column(TINYINT(1), default=0)

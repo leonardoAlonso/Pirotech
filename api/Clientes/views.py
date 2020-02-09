@@ -95,9 +95,16 @@ class ClienteView(Resource):
         if identity != client_id:
             return {'status': 'error', 'data': 'Identity error'}, 400
         client = Cliente.query.filter_by(id=identity).first()
+        user = client.user
         if client:
-            result = client_schema.dump(client).data
-            return {'status': 'success', 'data': result}, 200
+            client_result = client_schema.dump(client).data
+            user_result = user_schema.dump(user).data
+            return {
+                'status': 'success',
+                'data': {
+                    'user': user_result,
+                    'client': client_result
+                }}, 200
         else:
             return {'status': 'error', 'data': 'Client does not exist'}, 404
 
@@ -117,16 +124,23 @@ class ClienteView(Resource):
                 return {'status': 'error', 'data': 'Args empty'}, 400
             if args['name']:
                 if uniqueName(args['name']):
-                    client.name = args['name']
+                    client.user.name = args['name']
                 else:
                     return {'status': 'error', 'data': 'Username invalid'}
             if args['password']:
                 if len(args['password']) > 8:
                     args['password'] = bc.generate_password_hash(
                         args['password'])
-                    client.password = args['password']
+                    client.user.password = args['password']
                 else:
                     return {'status': 'error', 'data': 'Password is not valid'}, 400
             db.session.commit()
-            result = client_schema.dump(client).data
-            return {'status': 'success', 'data': result}
+            client_result = client_schema.dump(client).data
+            user_result = user_schema.dump(client.user).data
+            return {
+                'status': 'success',
+                'data': {
+                    'user': user_result,
+                    'client': client_result
+                }
+            }, 200
