@@ -4,7 +4,7 @@ from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from api.models import db
 from api.Clientes.views import ClientesView, ClienteView
-from api.Auth.views import ClientAuth
+from api.Auth.views import ClientAuth, TokenRefresh
 
 api_bp = Blueprint('api', __name__)
 
@@ -22,5 +22,6 @@ api = Api(api_bp)
 
 # Route
 api.add_resource(ClientAuth, '/clientes/auth')
+api.add_resource(TokenRefresh, '/clientes/refresh')
 api.add_resource(ClientesView, '/clientes')
 api.add_resource(ClienteView, '/clientes/<client_id>')

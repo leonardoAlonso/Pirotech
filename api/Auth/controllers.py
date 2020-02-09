@@ -1,6 +1,5 @@
 from api.models import bc
-from api.Clientes.models import Cliente
-
+from api.Users.models import User
 
 def autenticate(user, password):
     ''' Authenticate a user
@@ -12,7 +11,7 @@ def autenticate(user, password):
         Returns:
             object(Client)
     '''
-    client = Cliente.query.filter_by(email=user).first()
+    client = User.query.filter_by(email=user).first()
     try:
         if client and bc.check_password_hash(client.password, password):
             return client
