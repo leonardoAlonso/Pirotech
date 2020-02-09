@@ -5,6 +5,8 @@ from api.config import DevelopmentConfig
 from api.models import db
 from api.Clientes.models import Cliente
 from api.Users.models import User
+from api.Market.models import Market
+from api.Seller.models import Seller
 
 app = create_app(DevelopmentConfig)
 migrate = Migrate(app, db)

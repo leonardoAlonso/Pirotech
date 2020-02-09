@@ -10,7 +10,8 @@ class User(BaseModel, db.Model):
     client = relationship('Cliente', uselist=False, back_populates='user')
     email = db.Column(db.String(100), nullable=False)
     password = db.Column(db.String(100), nullable=False)
-    is_active = db.Column(TINYINT(1), default=1 )
+    is_active = db.Column(TINYINT(1), default=1)
+    is_admin = db.Column(TINYINT(1), default=0)
 
 
 class UserSchema(ma.Schema):
