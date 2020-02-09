@@ -2,10 +2,15 @@ from api.models import db, bc
 from flask_restful import Resource, reqparse
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from .models import Cliente, ClienteSchema
-from .controller import uniqueEmail, uniqueName
+from .controllers import createClient
+from api.Users.models import UserSchema
+from api.Users.controllers import *
 
 clients_schema = ClienteSchema(many=True)
 client_schema = ClienteSchema()
+
+users_schema = UserSchema(many=True)
+user_schema = UserSchema()
 
 parcer = reqparse.RequestParser()
 parcer.add_argument("name", type=str, required=True,
@@ -20,6 +25,7 @@ parcer_update.add_argument("profile_picture", type=str)
 parcer_update.add_argument("name", type=str)
 parcer_update.add_argument("password", type=str)
 
+
 class ClientesView(Resource):
     """
         Clientes view
@@ -27,11 +33,12 @@ class ClientesView(Resource):
         Get a list of clients
     """
     @classmethod
-    def get(cls ):
+    def get(cls):
         '''
         Get a list of all clientes
         '''
         clients = Cliente.query.all()
+        print(clients)
         clients = clients_schema.dump(clients).data
         return {'status': 'success', 'data': clients}, 200
 
@@ -45,16 +52,35 @@ class ClientesView(Resource):
             return {'status': 'error', 'data': 'Password len error'}, 400
         args['password'] = bc.generate_password_hash(args['password'])
         if uniqueEmail(args['email']) and uniqueName(args['name']):
-            client = Cliente(**args)
             try:
-                db.session.add(client)
-                db.session.commit()
-                result = client_schema.dump(client).data
-                return {'status':'success', 'data':result}, 201
+                user_args = {
+                    'name': args['name'],
+                    'email': args['email'],
+                    'password': args['password']
+                }
+                user = createUser(**user_args)
+                user_result = user_schema.dump(user).data
             except Exception as e:
-                return {'status':'error', 'data':str(e)}, 400
+                return {'status': 'error', 'data': str(e)}, 400
+            try:
+                client_args = {
+                    'user_id': user.id,
+                }
+                client = createClient(**client_args)
+                client_result = client_schema.dump(client).data
+            except Exception as e:
+                return {'status': 'error', 'data': str(e)}, 400
+            return {
+                'status': 'success',
+                'data': {
+                    'user': user_result,
+                    'client': client_result
+                }
+            }, 201
         else:
             return {'status': 'error', 'data': 'Not unique'}, 400
+
+
 class ClienteView(Resource):
     '''
         Get, Update and Delete a client
@@ -71,9 +97,10 @@ class ClienteView(Resource):
         client = Cliente.query.filter_by(id=identity).first()
         if client:
             result = client_schema.dump(client).data
-            return {'status': 'success', 'data':result}, 200
+            return {'status': 'success', 'data': result}, 200
         else:
-            return {'status':'error', 'data':'Client does not exist'}, 404
+            return {'status': 'error', 'data': 'Client does not exist'}, 404
+
     @classmethod
     @jwt_required
     def put(cls, client_id):
@@ -95,10 +122,11 @@ class ClienteView(Resource):
                     return {'status': 'error', 'data': 'Username invalid'}
             if args['password']:
                 if len(args['password']) > 8:
-                    args['password'] = bc.generate_password_hash(args['password'])
+                    args['password'] = bc.generate_password_hash(
+                        args['password'])
                     client.password = args['password']
                 else:
                     return {'status': 'error', 'data': 'Password is not valid'}, 400
             db.session.commit()
             result = client_schema.dump(client).data
-            return {'status': 'success', 'data':result}
+            return {'status': 'success', 'data': result}
