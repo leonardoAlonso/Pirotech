@@ -16,8 +16,8 @@ Create a mysqll database named `pirotech` and `pirotech-test` to run de unnittes
 ## Run project
 To run this project exceute this comands into the terminal
 ```
-python manage.py db init
-python manage.py db migrate
-python manage.py db upgrade
-python manage.py runserver -d -r #-d is to active de debug mode -r is to active the reload mode
+flask db init
+flask db migrate
+flask db upgrade
+flask run
 ```
