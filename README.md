@@ -11,6 +11,11 @@ virtualenv -p python3 env
 source env/bin/activate
 pip install -r requeriments.txt
 ```
+In Linux distros based on Devian run:
+```
+sudo apt-get install python3-dev default-libmysqlclient-dev build-essential
+```
+
 Create a mysqll database named `pirotech` and `pirotech-test` to run de unnittest
 
 ## Run project
