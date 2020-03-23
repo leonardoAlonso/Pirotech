@@ -3,14 +3,11 @@ from flask_restful import Resource, reqparse
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from .models import Cliente, ClienteSchema
 from .controllers import createClient
-from api.Users.models import UserSchema
 from api.Users.controllers import *
 
 clients_schema = ClienteSchema(many=True)
 client_schema = ClienteSchema()
 
-users_schema = UserSchema(many=True)
-user_schema = UserSchema()
 
 parcer = reqparse.RequestParser()
 parcer.add_argument("name", type=str, required=True,
@@ -38,7 +35,6 @@ class ClientesView(Resource):
         Get a list of all clientes
         '''
         clients = Cliente.query.all()
-        print(clients)
         clients = clients_schema.dump(clients).data
         return {'status': 'success', 'data': clients}, 200
 
@@ -59,7 +55,6 @@ class ClientesView(Resource):
                     'password': args['password']
                 }
                 user = createUser(**user_args)
-                user_result = user_schema.dump(user).data
             except Exception as e:
                 return {'status': 'error', 'data': str(e)}, 400
             try:
@@ -73,7 +68,6 @@ class ClientesView(Resource):
             return {
                 'status': 'success',
                 'data': {
-                    'user': user_result,
                     'client': client_result
                 }
             }, 201
@@ -98,11 +92,9 @@ class ClienteView(Resource):
         user = client.user
         if client:
             client_result = client_schema.dump(client).data
-            user_result = user_schema.dump(user).data
             return {
                 'status': 'success',
                 'data': {
-                    'user': user_result,
                     'client': client_result
                 }}, 200
         else:
@@ -136,11 +128,9 @@ class ClienteView(Resource):
                     return {'status': 'error', 'data': 'Password is not valid'}, 400
             db.session.commit()
             client_result = client_schema.dump(client).data
-            user_result = user_schema.dump(client.user).data
             return {
                 'status': 'success',
                 'data': {
-                    'user': user_result,
                     'client': client_result
                 }
             }, 200

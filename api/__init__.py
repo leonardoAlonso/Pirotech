@@ -8,6 +8,7 @@ from api.Auth.views import ClientAuth, TokenRefresh
 
 api_bp = Blueprint('api', __name__)
 
+
 def create_app(config_object):
     app = Flask(__name__)
     app.config.from_object(config_object)
@@ -17,6 +18,7 @@ def create_app(config_object):
         db.init_app(app)
         db.create_all()
     return app
+
 
 api = Api(api_bp)
 

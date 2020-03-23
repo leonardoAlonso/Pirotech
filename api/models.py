@@ -7,6 +7,7 @@ db = SQLAlchemy()
 ma = Marshmallow()
 bc = Bcrypt()
 
+
 class BaseModel(object):
     id = db.Column(db.String(36), primary_key=True)
     creation_date = db.Column(

@@ -4,6 +4,8 @@ from sqlalchemy.orm import relationship
 from sqlalchemy import ForeignKey
 from sqlalchemy.dialects.mysql import TINYINT
 
+from api.Users.models import UserSchema
+
 
 class Cliente(BaseModel, db.Model):
     """ Table Clientes """
@@ -20,4 +22,5 @@ class ClienteSchema(ma.Schema):
     """ Serializer from Clientes table """
     id = fields.String()
     profile_picture = fields.String(required=True)
+    user = fields.Nested(UserSchema)
 
