@@ -1,7 +1,7 @@
 from api.models import db, ma, BaseModel
 from marshmallow import fields
 from sqlalchemy.orm import relationship
-from sqlalchemy.dialects.mysql import TINYINT
+from sqlalchemy.dialects.postgresql import BOOLEAN
 
 class User(BaseModel, db.Model):
     """ Table Users """
@@ -10,7 +10,7 @@ class User(BaseModel, db.Model):
     client = relationship('Cliente', uselist=False, back_populates='user')
     email = db.Column(db.String(100), nullable=False)
     password = db.Column(db.String(100), nullable=False)
-    is_active = db.Column(TINYINT(1), default=1 )
+    is_active = db.Column(BOOLEAN, default=True)
 
 
 class UserSchema(ma.Schema):
