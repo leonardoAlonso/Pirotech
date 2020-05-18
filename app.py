@@ -5,7 +5,15 @@ from api.models import db
 from api.Clientes.models import Cliente
 from api.Users.models import User
 
-app = create_app(DevelopmentConfig)
+import os
+
+try:
+    env = os.environ['APPLICATION_ENV']
+except KeyError as e:
+    print('Unknown environment key, defaulting to Development')
+    env = 'DevelopmentConfig'
+print("* App runing on {} environment".format(env))
+app = create_app("api.config.%s"%env)
 migrate = Migrate(app, db)
 
 

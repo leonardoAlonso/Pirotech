@@ -13,10 +13,13 @@ pip install -r requeriments.txt
 ```
 In Linux distros based on Devian run:
 ```
-sudo apt-get install python3-dev default-libmysqlclient-dev build-essential
+sudo apt-get install python3-dev build-essential
+sudo apt-get install libpq-dev
+sudo pip install psycopg2
 ```
 
-Create a mysqll database named `pirotech` and `pirotech-test` to run de unnittest
+Create a postgresql database named `pirotech` and `pirotech-test` to run de unnittest
+using pirotechuser as user
 
 ## Run project
 To run this project exceute this comands into the terminal

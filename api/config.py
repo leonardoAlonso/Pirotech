@@ -17,5 +17,5 @@ class DevelopmentConfig(Config):
 
 class TestingConfig(Config):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = ''
+    SQLALCHEMY_DATABASE_URI = 'postgresql://pirotechuser:Leonardo.130.@localhost:5432/pirotech_test'
 
