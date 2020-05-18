@@ -22,6 +22,18 @@ Create a postgresql database named `pirotech` and `pirotech-test` to run de unni
 using pirotechuser as user
 
 ## Run project
+
+Set envirnment var
+```
+export APPLICATION_ENV='DEVELOPMENT_CONFIG'
+```
+use next values to set environment app
+
+```
+DEVELOPMENT_CONFIG
+TESTING_CONFIG
+```
+
 To run this project exceute this comands into the terminal
 ```
 flask db init
