@@ -1,12 +1,14 @@
 import os
 
+base_dir = os.path.abspath(os.path.dirname(__file__))
+
 class Config(object):
     DEBUG = False
     TESTING = False
     basedir = os.path.abspath(os.path.dirname(__file__))
     SQLALCHEMY_ECHO = False
     SQLALCHEMY_TRACK_MODIFICATIONS = True
-    SQLALCHEMY_DATABASE_URI = 'postgresql://pirotechuser:Leonardo.130.@localhost:5432/pirotech'
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite://')
 class ProductionConfig(Config):
     pass
 

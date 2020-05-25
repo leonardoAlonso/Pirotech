@@ -5,6 +5,7 @@ from flask_jwt_extended import JWTManager
 from api.models import db
 from api.Clientes.views import ClientesView, ClienteView
 from api.Auth.views import ClientAuth, TokenRefresh
+from api.Markets.views import MarketsView
 
 api_bp = Blueprint('api', __name__)
 
@@ -22,8 +23,10 @@ def create_app(config_object):
 
 api = Api(api_bp)
 
-# Route
+# Client View
 api.add_resource(ClientAuth, '/clientes/auth')
 api.add_resource(TokenRefresh, '/clientes/refresh')
 api.add_resource(ClientesView, '/clientes')
 api.add_resource(ClienteView, '/clientes/<client_id>')
+# Market View
+api.add_resource(MarketsView, '/markets')

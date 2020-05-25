@@ -9,11 +9,12 @@ class User(BaseModel, db.Model):
     name = db.Column(db.String(100), nullable=False)
     client = relationship('Cliente', uselist=False, back_populates='user')
     email = db.Column(db.String(100), nullable=False)
-    password = db.Column(db.String(100), nullable=False)
+    password = db.Column(db.String(150), nullable=False)
     is_active = db.Column(BOOLEAN, default=True)
 
 
 class UserSchema(ma.Schema):
     """ Serializer from Users table """
+    id = fields.String(required=True)
     name = fields.String(required=True)
     email = fields.String(required=True)

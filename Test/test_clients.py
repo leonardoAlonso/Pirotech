@@ -1,5 +1,6 @@
 import unittest
 from api import create_app
+from api.models import db
 from api.config import TestingConfig
 from faker import Faker
 
@@ -14,35 +15,29 @@ class ClientsTest(unittest.TestCase):
     """
     def setUp(self):
         self.app = create_app(TestingConfig)
-        self.test_client = self.app.test_client()
+        self.client = self.app.test_client()
+
+        with self.app.app_context():
+            db.create_all()
 
     def tearDown(self):
-        pass
+        with self.app.app_context():
+            db.session.remove()
+            db.drop_all()
 
     def getClientsList(self):
-        return self.test_client.get(base_url)
+        return self.client.get(base_url)
 
     def createClientSuccess(self):
         sent = {'email': fake.email(), 'name': fake.name(), 'password': "12345678"}
-        with self.test_client as client:
-            return client.post(base_url, data=sent)
-
-    def createClientErrorEmail(self):
-        sent = {'email': "sbishop@lopez.org",
-                'name': "Leonardo Alonso", 'password': "12345678"}
-        with self.test_client as client:
-            return client.post(base_url, data=sent)
-
-    def createClientErrorName(self):
-        sent = {'email': "leonardoalonsososa@gmail.com",
-                'name': "Yesenia Davis", 'password': "12345678"}
-        with self.test_client as client:
+        print(sent)
+        with self.client as client:
             return client.post(base_url, data=sent)
 
     def createClientErrorPassword(self):
         sent = {"email": "leonardoalonsososa@gmail.com",
                 "name": "Leonardo Alonso", "password": "1234567"}
-        with self.test_client as client:
+        with self.client as client:
             return client.post(base_url, data=sent)
 
     def testList(self):
@@ -52,14 +47,6 @@ class ClientsTest(unittest.TestCase):
     def testAdd(self):
         response = self.createClientSuccess()
         self.assertEqual(response.status_code, 201)
-
-    def testAddFailEmail(self):
-        response = self.createClientErrorEmail()
-        self.assertEqual(response.status_code, 400)
-
-    def testAddFailName(self):
-        response = self.createClientErrorName()
-        self.assertEqual(response.status_code, 400)
     
     def testAddFailPassword(self):
         response = self.createClientErrorPassword()

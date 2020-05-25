@@ -56,6 +56,7 @@ class ClientesView(Resource):
                 }
                 user = createUser(**user_args)
             except Exception as e:
+                print(str(e))
                 return {'status': 'error', 'data': str(e)}, 400
             try:
                 client_args = {
