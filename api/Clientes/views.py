@@ -3,7 +3,7 @@ from flask_restful import Resource, reqparse
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from .models import Cliente, ClienteSchema
 from .controllers import createClient
-from api.Users.controllers import *
+from api.Users.controllers import uniqueEmail, uniqueName, createUser
 
 clients_schema = ClienteSchema(many=True)
 client_schema = ClienteSchema()
@@ -90,7 +90,6 @@ class ClienteView(Resource):
         if identity != client_id:
             return {'status': 'error', 'data': 'Identity error'}, 400
         client = Cliente.query.filter_by(id=identity).first()
-        user = client.user
         if client:
             client_result = client_schema.dump(client).data
             return {

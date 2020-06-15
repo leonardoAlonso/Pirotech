@@ -1,5 +1,6 @@
 from .models import User
 
+
 def createUser(**kwargs):
     """
         Save new User in database
@@ -33,6 +34,4 @@ def uniqueName(name):
             [bool]
     """
     user = User.query.filter_by(name=name).first()
-    if not user:
-        return True
-    return False
+    return True if not user else False

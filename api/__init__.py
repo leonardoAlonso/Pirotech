@@ -14,7 +14,7 @@ def create_app(config_object):
     app = Flask(__name__)
     app.config.from_object(config_object)
     app.register_blueprint(api_bp, url_prefix='/api/v1')
-    jwt = JWTManager(app)
+    JWTManager(app)
     with app.app_context():
         db.init_app(app)
         db.create_all()
